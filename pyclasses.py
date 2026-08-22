@@ -1,4 +1,3 @@
-import os
 import random
 import time 
 
@@ -23,12 +22,6 @@ class SaucerCard(Card):
 class PostDoubleBonusCard(Card):
     def __init__(self):
         super().__init__(2, "C")
-
-
-class Combos:
-    combos = {
-
-    }
 
 
 class Deck:
@@ -94,7 +87,7 @@ class GameManager:
         self.deck = Deck()
         self.gameEnd = False
         self.turnNumber = 0
-        self.sitBonusTurn = random.randint(0,13)
+        self.sitBonusTurn = random.randint(1,12)
 
     def createPlayers(self, playername):
         self.players = {
@@ -106,19 +99,6 @@ class GameManager:
         self.deck.dealHand(self.players["Dealer"])
         self.deck.dealHand(self.players["Player"])
         
-
-    def checkWinningHand(self):
-        #occurs every turn
-        #currently there are only 2 players
-        self.players["Dealer"].hand 
-        self.players["Player"].hand
-
-        #D Cup
-        #Full Cup
-        #Half Cup
-        #Half A Cup
-        #Almost Half Cup
-    
 
     '''
     These functions check the winning hands
@@ -305,15 +285,13 @@ class GameManager:
         '''
         payout = 75
         hname = "Cup Card"
-        playerHand = [player.hand[0].facevalue + player.hand[0].suit, 
-                      player.hand[1].facevalue + player.hand[1].suit]
-        dealerHand = [dealer.hand[0].facevalue + dealer.hand[0].suit, 
-                      dealer.hand[1].facevalue + dealer.hand[1].suit]
         
-        if "10C" in playerHand:
+        if CupCard in [type(l) for l in player.hand]:
+            player.money+=payout
             print(f"{player.name} won ${payout} with a {hname}!")
             return True
-        elif "10C" in dealerHand:
+        elif CupCard in [type(l) for l in dealer.hand]:
+            dealer.money+=payout
             print(f"{dealer.name} won ${payout} with a {hname}!")
             return True
         else:
@@ -327,32 +305,30 @@ class GameManager:
         '''
         payout = 80
         hname = "Saucer Card"
-        playerHand = [player.hand[0].facevalue + player.hand[0].suit, 
-                        player.hand[1].facevalue + player.hand[1].suit]
-        dealerHand = [dealer.hand[0].facevalue + dealer.hand[0].suit, 
-                        dealer.hand[1].facevalue + dealer.hand[1].suit]
-        
-        if "10D" in playerHand:
+        if SaucerCard in [type(l) for l in player.hand]:
+            player.money+=payout
             print(f"{player.name} won ${payout} with a {hname}!")
             return True
-        elif "10D" in dealerHand:
+        elif SaucerCard in [type(l) for l in dealer.hand]:
+            dealer.money+=payout
             print(f"{dealer.name} won ${payout} with a {hname}!")
             return True
         else:
             return False
 
     def doublingBonus(self, player: Player):
-        if player.money == 700:
-            player.money*=2
-            userinput = (f"How much money have you won so far?\n")
-            userinput = (f"Not {player.money} exactly?!\n")
+        bonus = 700
+        if player.money == bonus:
+            userinput = input(f"How much money have you won so far?\n")
+            userinput = input(f"Not ${player.money} exactly?!\n")
             print(f"DOUBLE IT")
+            player.money*=2
             time.sleep(2)
-            print(f"You see in Cups once you get {player.money}, you have to double it!")
+            print(f"You see in Cups once you get ${bonus}, you have to double it!")
             time.sleep(1)
             print("Hey, i didnt make up the rules")
             time.sleep(3)
-            print(f"Now after you receive the doubling bonus, you get one card. That card can be worth 100 dollars, which brings your total to 1500. Dont get too excited bc thats not going to happen unless you get the…\n")
+            print(f"Now after you receive the doubling bonus, you get one card. That card can be worth 100 dollars, which brings your total to $1500. Dont get too excited bc thats not going to happen unless you get the…\n")
             time.sleep(5)
             print("(Dealer draws card)")
             time.sleep(1)
@@ -367,18 +343,13 @@ class GameManager:
     
     def checkSittingDownBonus(self):
         if self.sitBonusTurn==self.turnNumber:
-            bonus = 700
-            answer = input("Are you sitting down? (y/n)")
+            bonus = 700     #215
+            answer = input("Are you sitting down? (y/n)\n")
             if "yes" in answer.lower()  or answer.lower().strip() == "y":
                 self.players["Player"].money+=bonus
                 print(F"{self.players['Player'].name} got an extra ${bonus} for sitting down!")
             else:
                 print(f"Aw too bad")
-
-
-
-    def endRound(self):
-        pass
 
     def checkGameEnd(self):
         return len(self.deck.cards) < 4
@@ -403,6 +374,7 @@ class GameManager:
 
     def gameLoop(self):
         #start the game
+        t1 = time.perf_counter()
         name = input("Let's Play Cups\n\n\n...\n\nBeginner's luck, very important in Cups\n\nWhat's your name?\n")
         self.createPlayers(playername=name)
 
@@ -429,13 +401,10 @@ class GameManager:
 
             #check hand to see if the hands meet any of the payout hands
             #first the special hands
-            playerHand = [p.hand[0].facevalue, p.hand[1].facevalue]
-            dealerHand = [d.hand[0].facevalue, d.hand[1].facevalue]
 
             if not self.isDCup(player=p, dealer=d):
                 if not self.isFullCup(player=p, dealer=d):
                     if not self.isHalfCup(player=p, dealer=d):
-
                         if self.isAlmostHalfCup(player=p, dealer=d):
                             if self.isCupInAPizzaBox(player=p, dealer=d):
                                 if self.hasCupCard(player=p, dealer=d):
@@ -457,14 +426,16 @@ class GameManager:
                 print(f"Moving on")
 
             #check special events
-            self.doublingBonus(p)
             self.checkSittingDownBonus()
-
+            self.doublingBonus(p)       #should be last since it should be triggered the same turn $700 is reached
+            
             #finaly check if theres any cards left to continue the game
             if self.checkGameEnd():
                 self.gameEnd = True
         self.checkWinner()
-
+        t2 = time.perf_counter()
+        mins, secs = divmod(t2-t1, 60)
+        print(f"{int(mins)}:{int(secs):02d} of Cups")
 
 # cc = CupCard()
 # print(cc.facevalue)
