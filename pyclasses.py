@@ -367,9 +367,9 @@ class GameManager:
     
     def checkSittingDownBonus(self):
         if self.sitBonusTurn==self.turnNumber:
-            bonus = 215
+            bonus = 700
             answer = input("Are you sitting down? (y/n)")
-            if "yes" in answer.lower()  or answer.lower.strip() == "y":
+            if "yes" in answer.lower()  or answer.lower().strip() == "y":
                 self.players["Player"].money+=bonus
                 print(F"{self.players['Player'].name} got an extra ${bonus} for sitting down!")
             else:
@@ -392,11 +392,11 @@ class GameManager:
         #only runs when the endgame condition is hit
         #trigger Player checks
         if self.players["Dealer"].money > self.players["Player"].money:
-            print(f"Dealer wins with ${self.players["Dealer"].money}!")
+            print(f"Dealer wins with ${self.players['Dealer'].money}!")
         elif self.players["Dealer"].money < self.players["Player"].money:
-            print(f"{self.players["Player"].name} wins with ${self.players["Player"].money}!")
+            print(f"{self.players['Player'].name} wins with ${self.players['Player'].money}!")
         elif self.players["Dealer"].money == self.players["Player"].money:
-            print(f"It's a tie at ${self.players["Dealer"].money}")
+            print(f"It's a tie at ${self.players['Dealer'].money}")
         else:
             print("I can't tell who won")                
         return
@@ -430,10 +430,7 @@ class GameManager:
             #check hand to see if the hands meet any of the payout hands
             #first the special hands
             playerHand = [p.hand[0].facevalue, p.hand[1].facevalue]
-            dealerHand = [d.hand[0].facevalue, d.hand[1].facevalue] 
-
-
-            dcup = self.isDCup(player=p, dealer=d)
+            dealerHand = [d.hand[0].facevalue, d.hand[1].facevalue]
 
             if not self.isDCup(player=p, dealer=d):
                 if not self.isFullCup(player=p, dealer=d):
