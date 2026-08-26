@@ -343,7 +343,8 @@ class GameManager:
     
     def checkSittingDownBonus(self):
         if self.sitBonusTurn==self.turnNumber:
-            bonus = 700     #215
+            bonus = 215     #original
+            # bonus = 700     #for testing doubling bonus
             answer = input("Are you sitting down? (y/n)\n")
             if "yes" in answer.lower()  or answer.lower().strip() == "y":
                 self.players["Player"].money+=bonus
@@ -437,7 +438,8 @@ class GameManager:
         mins, secs = divmod(t2-t1, 60)
         print(f"{int(mins)}:{int(secs):02d} of Cups")
 
-# cc = CupCard()
-# print(cc.facevalue)
-g = GameManager()
-g.gameLoop()
+if __name__ == "__main__":
+    # cc = CupCard()
+    # print(cc.facevalue)
+    g = GameManager()
+    g.gameLoop()

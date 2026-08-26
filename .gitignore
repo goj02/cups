@@ -157,6 +157,9 @@ ENV/
 env.bak/
 venv.bak/
 
+#test-media-folders
+csv/
+
 # Spyder project settings
 .spyderproject
 .spyproject

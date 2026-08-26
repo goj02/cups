@@ -1,7 +1,7 @@
 # test_cups.py
 import pytest
 from unittest.mock import patch
-import cups
+import consoleclasses as cups
 
 
 def card(v, s):
