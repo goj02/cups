@@ -227,7 +227,8 @@ class GameManager:
             if self.turnNumber == 1:
                 hit, who, name, payout = self.hasSaucerCard(player=p, dealer=d)
                 if hit:
-                    events.append((who, name, payout))
+                    # events.append((who, name, payout))
+                    events.append((who, name, payout, self.turnNumber))
 
             checks = [
                 self.isDCup,
@@ -242,16 +243,19 @@ class GameManager:
             for fn in checks:
                 hit, who, name, payout = fn(player=p, dealer=d)
                 if hit:
-                    events.append((who, name, payout))
+                    # events.append((who, name, payout))
+                    events.append((who, name, payout, self.turnNumber))
                     break
 
             hit, who, name, payout = self.checkSittingDownBonus()
             if hit:
-                events.append((who, name, payout))
+                # events.append((who, name, payout))
+                events.append((who, name, payout, self.turnNumber))
 
             hit, who, name, payout = self.doublingBonus(p)
             if hit:
-                events.append((who, name, payout))
+                # events.append((who, name, payout))
+                events.append((who, name, payout, self.turnNumber))
 
             if self.checkGameEnd():
                 self.gameEnd = True

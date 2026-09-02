@@ -21,7 +21,8 @@ def simulate_one_game(session_id):
     event_counts = defaultdict(int)
     payout_totals = defaultdict(int)
 
-    for who, event_type, payout in result["events"]:
+    # for who, event_type, payout in result["events"]:
+    for who, event_type, payout, turnnum in result["events"]:
         event_counts[event_type] += 1
         payout_totals[event_type] += payout
 
@@ -49,7 +50,7 @@ def simulate_one_game(session_id):
                 "dealer_money": result["dealer_money"],
                 "event_type": event_type,
                 "event_count_in_game": event_counts[event_type],
-                "event_payout_total_in_game": payout_totals[event_type],
+                # "event_payout_total_in_game": payout_totals[event_type],
             })
 
     return rows, result["events"]
@@ -82,7 +83,7 @@ def run_simulations(numsim=NUMSIM):
                 "dealer_money",
                 "event_type",
                 "event_count_in_game",
-                "event_payout_total_in_game",
+                # "event_payout_total_in_game",
             ],
         )
         writer.writeheader()

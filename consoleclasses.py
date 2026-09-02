@@ -9,7 +9,17 @@ class Card:
         self.suit = suit
 
     def printCard(self):
-        print(f"{self.facevalue} {self.suit}")
+        # print(f"{self.facevalue} {self.suit}")    #basic print
+        print(f"|--------|")
+        print(f"|{self.facevalue} {self.suit}        |")
+        print(f"|        |")
+        print(f"|        |")
+        print(f"|        {self.facevalue} {self.suit}|")
+        print(f"|--------|")
+
+    def returnCardImg(self):
+        return f"|--------|\n|{self.facevalue} {self.suit}        |\n|        |\n|        |\n|        {self.facevalue} {self.suit}|\n|--------|"
+
 
 class CupCard(Card):
     def __init__(self):
@@ -74,7 +84,15 @@ class Player:
         self.hand = []
 
     def printHand(self):
-        print(f"{self.name} : {self.hand[0].facevalue} {self.hand[0].suit} | {self.hand[1].facevalue} {self.hand[1].suit}")
+        # print(f"{self.name} : {self.hand[0].facevalue} {self.hand[0].suit} | {self.hand[1].facevalue} {self.hand[1].suit}")
+        print(f"\n{self.name}\n") 
+        print(f" ________        ________")
+        print(f"|{self.hand[0].facevalue: <8}|      |{self.hand[1].facevalue: <8}|")
+        print(f"|        |      |        |")
+        print(f"|    {self.hand[0].suit}   |      |    {self.hand[1].suit}   |")
+        print(f"|        |      |        |")
+        print(f"|{self.hand[0].facevalue:_>8}|      |{self.hand[1].facevalue:_>8}|")
+
 
     def discardHand(self):
         #release objects from memory

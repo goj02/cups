@@ -21,7 +21,7 @@ CSV_FIELDS = [
     "winner",
     "player_money",
     "dealer_money",
-    "event_payout_total_in_game",
+    # "event_payout_total_in_game",
 ]
 
 def timestamped_filename():
