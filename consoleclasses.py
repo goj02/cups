@@ -93,6 +93,9 @@ class Player:
         print(f"|        |      |        |")
         print(f"|{self.hand[0].facevalue:_>8}|      |{self.hand[1].facevalue:_>8}|")
 
+    def returnHandSimple(self):
+        s = f"{self.hand[0].facevalue} {self.hand[0].suit} | {self.hand[1].facevalue} {self.hand[1].suit}"
+        return s
 
     def discardHand(self):
         #release objects from memory
@@ -154,11 +157,11 @@ class GameManager:
         dealerHand = [dealer.hand[0].facevalue, dealer.hand[1].facevalue] 
         if '3' in playerHand and '6' in playerHand:
             player.money+=payout
-            print(f"{player.name} won ${payout} with a {hname}!")
+            print(f"{player.name} won ${payout} with a {hname}: {player.returnHandSimple()}!")
             return True
         elif '3' in dealerHand and '6' in dealerHand:
             dealer.money+=payout
-            print(f"{dealer.name} won ${payout} with a {hname}!")
+            print(f"{dealer.name} won ${payout} with a {hname}: {dealer.returnHandSimple()}!")
             return True
         else:
             #the dealer and the player dont have the winning hand 
@@ -175,11 +178,11 @@ class GameManager:
         dealerHand = [dealer.hand[0].facevalue, dealer.hand[1].facevalue] 
         if '4' in playerHand and '9' in playerHand:
             player.money+=payout
-            print(f"{player.name} won ${payout} with a {hname}!")
+            print(f"{player.name} won ${payout} with a {hname}: {player.returnHandSimple()}!")
             return True
         elif '4' in dealerHand and '9' in dealerHand:
             dealer.money+=payout
-            print(f"{dealer.name} won ${payout} with a {hname}!")
+            print(f"{dealer.name} won ${payout} with a {hname}: {dealer.returnHandSimple()}!")
             return True
         else:
             #the dealer and the player dont have the winning hand 
@@ -211,11 +214,11 @@ class GameManager:
 
         if isWin(playerHand):
             player.money+=payout
-            print(f"{player.name} won ${payout} with a {hname}!")
+            print(f"{player.name} won ${payout} with a {hname}: {player.returnHandSimple()}!")
             return True
         elif isWin(dealerHand):
             dealer.money+=payout
-            print(f"{dealer.name} won ${payout} with a {hname}!")
+            print(f"{dealer.name} won ${payout} with a {hname}: {dealer.returnHandSimple()}!")
             return True
         else:
             #the dealer and the player dont have the winning hand 
@@ -255,11 +258,11 @@ class GameManager:
 
         if isWin(playerHand) and isMatchWin(dealerHand):
             player.money+=payout
-            print(f"{player.name} won ${payout} with a {hname}!")
+            print(f"{player.name} won ${payout} with a {hname}: {player.returnHandSimple()}!")
             return True
         elif isWin(dealerHand) and isMatchWin(playerHand):
             dealer.money+=payout
-            print(f"{dealer.name} won ${payout} with a {hname}!")
+            print(f"{dealer.name} won ${payout} with a {hname}: {dealer.returnHandSimple()}!")
             return True
         else:
             #the dealer and the player dont have the winning hand 
@@ -287,11 +290,11 @@ class GameManager:
 
         if isWin(playerHand) and isMatchWin(dealerHand):
             player.money+=payout
-            print(f"{player.name} won ${payout} with a {hname}!")
+            print(f"{player.name} won ${payout} with a {hname}: {player.returnHandSimple()}!")
             return True
         elif isWin(dealerHand) and isMatchWin(playerHand):
             dealer.money+=payout
-            print(f"{dealer.name} won ${payout} with a {hname}!")
+            print(f"{dealer.name} won ${payout} with a {hname}: {dealer.returnHandSimple()}!")
             return True
         else:
             #the dealer and the player dont have the winning hand 
@@ -306,11 +309,11 @@ class GameManager:
         
         if CupCard in [type(l) for l in player.hand]:
             player.money+=payout
-            print(f"{player.name} won ${payout} with a {hname}!")
+            print(f"{player.name} won ${payout} with a {hname}: {player.returnHandSimple()}!")
             return True
         elif CupCard in [type(l) for l in dealer.hand]:
             dealer.money+=payout
-            print(f"{dealer.name} won ${payout} with a {hname}!")
+            print(f"{dealer.name} won ${payout} with a {hname}: {dealer.returnHandSimple()}!")
             return True
         else:
             return False
@@ -325,11 +328,11 @@ class GameManager:
         hname = "Saucer Card"
         if SaucerCard in [type(l) for l in player.hand]:
             player.money+=payout
-            print(f"{player.name} won ${payout} with a {hname}!")
+            print(f"{player.name} won ${payout} with a {hname}: {player.returnHandSimple()}!")
             return True
         elif SaucerCard in [type(l) for l in dealer.hand]:
             dealer.money+=payout
-            print(f"{dealer.name} won ${payout} with a {hname}!")
+            print(f"{dealer.name} won ${payout} with a {hname}: {dealer.returnHandSimple()}!")
             return True
         else:
             return False
